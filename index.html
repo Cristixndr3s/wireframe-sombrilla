@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Wireframe · Marca sombrilla RappiPay</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="notice" role="note">
+    Wireframe interno de arquitectura de información · No es un sitio oficial · Textos y cifras de ejemplo
+    <label class="notice__toggle"><input type="checkbox" id="toggle-notes" checked> Mostrar anotaciones</label>
+  </div>
+
+  <header class="header">
+    <div class="utility">
+      <a href="#/perdida-o-robo/" class="utility__urgent">Reportar pérdida o robo</a>
+    </div>
+    <div class="bar">
+      <a href="#/" class="logo" aria-label="Inicio">Logo RappiPay</a>
+      <nav class="nav" aria-label="Menú principal">
+        <ul class="nav__list" id="nav-list"></ul>
+      </nav>
+      <a href="#" class="btn btn--primary header__cta" id="header-cta">Abrir RappiCuenta</a>
+      <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="drawer">☰</button>
+    </div>
+    <div class="mega" id="mega" hidden></div>
+  </header>
+
+  <div class="drawer" id="drawer" hidden>
+    <div class="drawer__head">
+      <button class="drawer__back" id="drawer-back" hidden>‹ Volver</button>
+      <button class="drawer__close" id="drawer-close" aria-label="Cerrar menú">✕</button>
+    </div>
+    <a href="#/perdida-o-robo/" class="drawer__urgent">Reportar pérdida o robo</a>
+    <div class="drawer__body" id="drawer-body"></div>
+  </div>
+
+  <main id="app"></main>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
