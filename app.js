@@ -43,7 +43,11 @@
   };
 
   const vars = s => (s || '').replace(/\{\{(\w+)\}\}/g, '<span class="var" title="Dato administrable del CMS (Punto 4.7)">$1</span>');
-  const href = p => '#' + p;
+  // Rutas como #nombre simple (rappicard-simulador) para que funcionen en cualquier hosting.
+  const slug = p => p.replace(/^\/|\/$/g, '').replace(/\//g, '-') || 'inicio';
+  const BY_SLUG = {};
+  Object.values(NODES).forEach(n => { BY_SLUG[slug(n.path)] = n; });
+  const href = p => '#' + slug(p);
 
   // ---------- Piezas comunes ----------
   const note = n => `
@@ -55,7 +59,7 @@
   const crumbs = n => {
     if (n.path === '/') return '';
     const segs = n.path.split('/').filter(Boolean);
-    const items = ['<a href="#/">Inicio</a>'];
+    const items = ['<a href="#inicio">Inicio</a>'];
     segs.forEach((_, i) => {
       const p = '/' + segs.slice(0, i + 1).join('/') + '/';
       const node = NODES[p];
@@ -73,7 +77,7 @@
 
   const ctaBtn = (n, cls = 'btn--light') => {
     const c = ctaOf(n);
-    return `<a class="btn ${cls}" href="javascript:void(0)" title="En el sitio real lleva a la app o al onboarding">${c}${c === CTA.tbd ? '' : ''}</a>`;
+    return `<button type="button" class="btn ${cls}" title="En el sitio real lleva a la app o al onboarding">${c}</button>`;
   };
 
   const img = (size = '') => `<div class="img ${size}" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="9" cy="9" r="2"/><path d="M3 17l5-4 3 2 5-5 5 4"/></svg></div>`;
@@ -145,7 +149,7 @@
             <h1 class="h1 h1--caps">${n.prop}</h1>
             <p class="lead">${n.desc}</p>
             <ul class="proofs">${n.proofs.map(p => `<li>${vars(p)}</li>`).join('')}</ul>
-            <div class="actions">${ctaBtn(n)}${n.children ? '<a class="link" href="#features">Ver funcionalidades</a>' : '<a class="link" href="#/tasas-y-tarifas/">Ver tasas y tarifas</a>'}</div>
+            <div class="actions">${ctaBtn(n)}${n.children ? '<a class="link" href="#features">Ver funcionalidades</a>' : '<a class="link" href="#tasas-y-tarifas">Ver tasas y tarifas</a>'}</div>
             ${entityLine(n)}
           </div>
           ${img('img--framed')}
@@ -224,7 +228,7 @@
       <div class="mega__items">${need.children.map(c => `
         <div class="mega__item">
           <a class="mega__link" href="${href(c.path)}"><strong>${c.title}</strong><span>${c.prop}</span></a>
-          ${c.children ? `<div class="mega__subs">${c.children.slice(0, 4).map(s => `<a href="${href(s.path)}">${s.title}</a>`).join('')}${c.children.length > 4 ? `<a href="${href(c.path)}#features">+${c.children.length - 4} más</a>` : ''}</div>` : ''}
+          ${c.children ? `<div class="mega__subs">${c.children.slice(0, 4).map(s => `<a href="${href(s.path)}">${s.title}</a>`).join('')}${c.children.length > 4 ? `<a href="${href(c.path)}">+${c.children.length - 4} más</a>` : ''}</div>` : ''}
         </div>`).join('')}
       </div>`;
   };
@@ -302,22 +306,20 @@
   const headerCta = document.getElementById('header-cta');
 
   const render = () => {
-    const raw = location.hash.replace(/^#/, '') || '/';
-    if (!raw.startsWith('/')) return; // anclas internas (#needs, #features)
-    const path = raw.split('#')[0];
-    const n = NODES[path];
+    const raw = location.hash.replace(/^#/, '') || 'inicio';
+    if (raw === 'needs' || raw === 'features') return; // anclas internas
+    const n = BY_SLUG[raw];
     closeMega();
     closeDrawer();
     if (!n) {
-      app.innerHTML = `<section class="hero hero--page"><h1 class="h1">Página no incluida en el wireframe</h1><p class="lead"><a href="#/">Volver al inicio</a></p></section>`;
+      app.innerHTML = `<section class="hero hero--page"><h1 class="h1">Página no incluida en el wireframe</h1><p class="lead"><a href="#inicio">Volver al inicio</a></p></section>`;
       return;
     }
     app.innerHTML = HERO[n.type](n) + below();
     headerCta.textContent = ctaOf(n);
     navList.querySelectorAll('.nav__item').forEach(b => b.classList.toggle('is-current', b.dataset.aud === n.audience.path));
     document.title = `${n.title} · Wireframe sombrilla RappiPay`;
-    const anchor = raw.split('#')[1];
-    if (anchor) document.getElementById(anchor)?.scrollIntoView(); else window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
   };
 
   app.addEventListener('click', e => {
