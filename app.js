@@ -210,7 +210,7 @@
       <section class="hero hero--category">
         ${note(n)}
         ${crumbs(n)}
-        <p class="kicker">Aprende · ${n.title}</p>
+        <p class="kicker">Blog · ${n.title}</p>
         <h1 class="h1">${n.prop}</h1>
         <p class="lead">${n.desc || ''}</p>
         ${n.rule ? `<p class="rule">${n.rule}</p>` : ''}

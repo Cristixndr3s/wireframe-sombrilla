@@ -40,8 +40,7 @@ const TREE = [
           { path: '/rappicuenta/bovedas/', title: 'Bóvedas', type: 'feature', prop: 'Deja tu plata quieta y gana más por el plazo que elijas' },
           { path: '/rappicuenta/alta-rentabilidad-cuentas/', title: 'Rentabilidad', type: 'feature', prop: 'Cuánto rinde tu plata en cada opción' },
           { path: '/rappicuenta/ahorro-automatico/', nueva: true, title: 'Ahorro automático', type: 'feature', prop: 'Ahorra sin pensarlo, con reglas que tú defines' },
-          { path: '/alianzas/', title: 'Beneficios y alianzas', type: 'feature', prop: 'Descuentos con marcas aliadas pagando con RappiCuenta' },
-          { path: '/rappicuenta/blog/', nueva: true, title: 'Todo sobre RappiCuenta', type: 'category', prop: 'Guías, primeros pasos y novedades de tu cuenta' }
+          { path: '/alianzas/', title: 'Beneficios y alianzas', type: 'feature', prop: 'Descuentos con marcas aliadas pagando con RappiCuenta' }
         ]
       },
       {
@@ -60,8 +59,7 @@ const TREE = [
               { path: '/rappicard/meses-sin-intereses/', rc: true, title: 'Meses sin intereses', type: 'feature', prop: 'Difiere tus compras sin pagar intereses' },
               { path: '/rappicard/simulador/', rc: true, title: 'Simulador', type: 'feature', prop: 'Calcula tus cuotas antes de comprar' },
               { path: '/rappicard/apple-pay/', rc: true, title: 'Apple Pay', type: 'feature', prop: 'Paga con tu celular de forma segura' },
-              { path: '/rappicard/beneficios/', rc: true, title: 'Beneficios RappiCard', type: 'feature', prop: 'Aliados y Viajes RappiCard' },
-              { path: '/rappicard/blog/', nueva: true, rc: true, title: 'Todo sobre RappiCard', type: 'category', prop: 'Ciclo de facturación, guías y novedades' }
+              { path: '/rappicard/beneficios/', rc: true, title: 'Beneficios RappiCard', type: 'feature', prop: 'Aliados y Viajes RappiCard' }
             ]
           },
           {
@@ -83,8 +81,7 @@ const TREE = [
           { path: '/rappiprestamo/libre-inversion/', nueva: true, title: 'Crédito de libre inversión', type: 'feature', prop: 'Para viajes, tecnología o lo que necesites' },
           { path: '/rappiprestamo/requisitos/', nueva: true, title: 'Requisitos', type: 'feature', prop: 'Qué necesitas para pedirlo' },
           { path: '/rappiprestamo/vtu/', title: '¿Qué es el VTU?', type: 'feature', prop: 'El Valor Total Unificado: todos los costos en una sola cifra' },
-          { path: '/rappiprestamo/simulador/', nueva: true, title: 'Simula tu préstamo', type: 'feature', prop: 'Calcula tu cuota y tu VTU antes de pedirlo' },
-          { path: '/rappiprestamo/blog/', nueva: true, title: 'Todo sobre RappiPréstamo', type: 'category', prop: 'Guías y novedades de tu préstamo' }
+          { path: '/rappiprestamo/simulador/', nueva: true, title: 'Simula tu préstamo', type: 'feature', prop: 'Calcula tu cuota y tu VTU antes de pedirlo' }
         ]
       },
       {
@@ -96,8 +93,7 @@ const TREE = [
         children: [
           { path: '/rappiseguros/tarjeta-protegida-plus/', nuevo: true, title: 'Tarjeta Protegida Plus', type: 'feature', prop: 'Protege tus tarjetas contra fraude y uso indebido' },
           { path: '/rappiseguros/desempleo/', nuevo: true, title: 'Seguro por Desempleo', type: 'feature', prop: 'Respaldo si pierdes tu ingreso, seas empleado o independiente' },
-          { path: '/rappiseguros/vida/', nuevo: true, title: 'Seguro de Vida', type: 'feature', prop: 'Protección para ti y los tuyos' },
-          { path: '/rappiseguros/blog/', nuevo: true, title: 'Todo sobre RappiSeguros', type: 'category', prop: 'Guías y novedades de tus seguros' }
+          { path: '/rappiseguros/vida/', nuevo: true, title: 'Seguro de Vida', type: 'feature', prop: 'Protección para ti y los tuyos' }
         ]
       },
       {
@@ -234,19 +230,7 @@ const TREE = [
     ]
   },
 
-  // ---------------------------------------------------------------- 4. TU MEJOR DECISIÓN
-  {
-    path: '/blog/', title: 'Tu mejor decisión', type: 'audience', cta: CTA.cuenta,
-    prop: 'Entiende tu dinero antes de decidir',
-    desc: 'Guías y contenidos claros sobre dinero, crédito y finanzas, sin venderte un producto.',
-    children: [
-      { path: '/blog/educacion-financiera/', title: 'Educación financiera', type: 'category', prop: 'Presupuesto, ahorro, historial crediticio, 4x1000 y renta', rule: 'Contenido educativo: sin productos ni enlaces a productos (Punto 3.5)' },
-      { path: '/guia-financiera/', title: 'Tu guía financiera', type: 'category', prop: 'Paso a paso para tus decisiones de dinero', rule: 'Contenido educativo: sin productos ni enlaces a productos (Punto 3.5)' },
-      { path: '/manual-life-hacker/', nueva: true, title: 'Manual Life-Hacker Personas', type: 'page', prop: 'Trucos para manejar mejor tu plata' }
-    ]
-  },
-
-  // ---------------------------------------------------------------- 5. SOMOS RAPPIPAY
+  // ---------------------------------------------------------------- 4. SOMOS RAPPIPAY
   {
     path: '/acerca-de-rappipay/', title: 'Somos RappiPay', type: 'audience', cta: CTA.cuenta,
     prop: 'Quiénes somos y cómo respondemos',
@@ -256,6 +240,29 @@ const TREE = [
       { path: '/codigo-de-etica/', nueva: true, title: 'Código de ética', type: 'page', prop: 'Nuestros principios de conducta' },
       { path: '/notificaciones-judiciales/', nueva: true, title: 'Notificaciones judiciales', type: 'page', prop: 'Canal oficial para notificaciones' },
       { path: '/defensoria/', nueva: true, title: 'Defensoría del consumidor financiero', type: 'service', prop: 'El defensor de cada entidad', selector: ['RappiPay CF', 'Banco Davivienda'] }
+    ]
+  },
+
+  // ---------------------------------------------------------------- 5. BLOG
+  {
+    path: '/blog/', title: 'Blog', type: 'audience', cta: CTA.cuenta,
+    prop: 'Aprende a manejar tu plata y saca provecho de cada producto',
+    desc: 'Educación financiera para tomar mejores decisiones y guías de cada producto RappiPay.',
+    children: [
+      { path: '/blog/educacion-financiera/', title: 'Educación financiera', type: 'category', prop: 'Presupuesto, ahorro, historial crediticio, 4x1000 y renta', rule: 'Educa al cliente: sin productos ni enlaces a productos (Punto 3.5)' },
+      {
+        path: '/guia-financiera/', title: 'Tu guía financiera', type: 'need',
+        prop: 'Todo sobre nuestros productos',
+        desc: 'Guías, primeros pasos y novedades de cada producto. Cada guía pertenece a una sola entidad.',
+        children: [
+          { path: '/guia-financiera/rappicuenta/', nueva: true, title: 'Guía RappiCuenta', type: 'category', entidad: 'cf', prop: 'Primeros pasos, Bolsillos, Bóvedas y más', rule: 'Guía de producto: enlaza a su producto y lleva el disclaimer de su entidad' },
+          { path: '/guia-financiera/rappicard/', nueva: true, rc: true, title: 'Guía RappiCard', type: 'category', entidad: 'dav', prop: 'Ciclo de facturación, cashback y pagos', rule: 'Guía de producto: enlaza a su producto y lleva el disclaimer de su entidad' },
+          { path: '/guia-financiera/rappiprestamo/', nueva: true, title: 'Guía RappiPréstamo', type: 'category', entidad: 'cf', prop: 'Cómo pedirlo, VTU y pagos', rule: 'Guía de producto: enlaza a su producto y lleva el disclaimer de su entidad' },
+          { path: '/guia-financiera/rappiseguros/', nuevo: true, title: 'Guía RappiSeguros', type: 'category', entidad: 'seg', prop: 'Coberturas y cómo reclamar', rule: 'Guía de producto: enlaza a su producto y lleva el disclaimer de su entidad' },
+          { path: '/guia-financiera/empresas/', nueva: true, title: 'Guía para negocios y empresas', type: 'category', entidad: 'cf', prop: 'Cuenta, pagos y cobros para tu negocio', rule: 'Guía de producto: enlaza a su producto y lleva el disclaimer de su entidad' },
+          { path: '/manual-life-hacker/', nueva: true, title: 'Manual Life-Hacker Personas', type: 'page', prop: 'Trucos para sacarle provecho a RappiPay' }
+        ]
+      }
     ]
   }
 ];
