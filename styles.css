@@ -56,12 +56,25 @@ code { font-size: 12px; }
   font: inherit; font-size: 17px; color: var(--ink); text-decoration: none; cursor: pointer;
 }
 .mega__need:hover, .mega__need.is-active { background: var(--bg); }
-.mega__head { display: flex; justify-content: space-between; font-weight: 600; margin-bottom: 12px; }
+.mega__right { display: flex; flex-direction: column; gap: 16px; }
+.mega__head { display: flex; gap: 16px; align-items: baseline; font-weight: 600; }
+.mega__head a { font-size: 13px; }
+.mega__group { background: var(--white); border-radius: var(--radius); padding: 16px 20px; }
+.mega__product { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; text-decoration: none; padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px solid var(--bg); }
+.mega__product strong { font-size: 17px; }
+.mega__product span { font-size: 13px; color: var(--muted); }
+.mega__product em, .mega__link em { font-style: normal; font-size: 11px; color: var(--muted); }
+.mega__product em { margin-left: auto; }
+.mega__feats { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 4px 16px; }
+.mega__feat { display: flex; flex-direction: column; gap: 2px; padding: 8px; border-radius: 6px; text-decoration: none; }
+.mega__feat:hover { background: var(--bg); }
+.mega__feat strong { font-size: 14px; font-weight: 600; }
+.mega__feat span { font-size: 12px; color: var(--muted); }
 .mega__items { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
 .mega__item { background: var(--white); border-radius: var(--radius); padding: 16px; }
 .mega__link { display: flex; flex-direction: column; gap: 4px; text-decoration: none; }
 .mega__link span { font-size: 13px; color: var(--muted); }
-.mega__subs { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-top: 10px; font-size: 13px; }
+.mega__item:hover, .mega__product:hover strong { text-decoration: underline; }
 .mega__note { grid-column: 1 / -1; margin: 8px 0 0; font-size: 12px; color: var(--note); }
 
 /* ---------- Drawer móvil ---------- */

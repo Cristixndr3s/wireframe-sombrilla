@@ -221,16 +221,26 @@
 
   navList.innerHTML = TREE.map(a => `<li><button class="nav__item" data-aud="${a.path}" aria-expanded="false">${a.title}</button></li>`).join('');
 
+  // Panel derecho: cada producto con TODAS sus funcionalidades; lo demás, como tarjetas.
   const megaRight = need => {
     if (!need || !need.children) return '';
+    const groups = need.children.filter(c => c.children);
+    const singles = need.children.filter(c => !c.children);
     return `
       <div class="mega__head"><span>${need.title}</span><a href="${href(need.path)}">Ver todo ›</a></div>
-      <div class="mega__items">${need.children.map(c => `
-        <div class="mega__item">
-          <a class="mega__link" href="${href(c.path)}"><strong>${c.title}</strong><span>${c.prop}</span></a>
-          ${c.children ? `<div class="mega__subs">${c.children.slice(0, 4).map(s => `<a href="${href(s.path)}">${s.title}</a>`).join('')}${c.children.length > 4 ? `<a href="${href(c.path)}">+${c.children.length - 4} más</a>` : ''}</div>` : ''}
+      ${groups.map(g => `
+        <div class="mega__group">
+          <a class="mega__product" href="${href(g.path)}">
+            <strong>${g.title}</strong><span>${g.prop}</span>
+            ${g.entidad ? `<em>${ENTIDAD[g.entidad]}</em>` : ''}
+          </a>
+          <div class="mega__feats">${g.children.map(s => `
+            <a class="mega__feat" href="${href(s.path)}"><strong>${s.title}</strong><span>${s.prop}</span></a>`).join('')}
+          </div>
         </div>`).join('')}
-      </div>`;
+      ${singles.length ? `<div class="mega__items">${singles.map(c => `
+        <a class="mega__item mega__link" href="${href(c.path)}"><strong>${c.title}</strong><span>${c.prop}</span>${c.type === 'product' && c.entidad ? `<em>${ENTIDAD[c.entidad]}</em>` : ''}</a>`).join('')}
+      </div>` : ''}`;
   };
 
   const openMega = audPath => {
@@ -246,7 +256,7 @@
             : `<a class="mega__need" href="${href(c.path)}">${c.title}</a>`).join('')}
         </div>
         <div class="mega__right" id="mega-right">${megaRight(first)}</div>
-        <p class="mega__note">Nivel 1: ${aud.title} · Nivel 2: necesidad · Nivel 3: producto o servicio</p>
+        <p class="mega__note">Nivel 1: ${aud.title} · Nivel 2: necesidad · Nivel 3: producto o servicio · Nivel 4: funcionalidad</p>
       </div>`;
     mega.hidden = false;
     navList.querySelectorAll('.nav__item').forEach(b => b.setAttribute('aria-expanded', String(b.dataset.aud === audPath)));
@@ -288,9 +298,9 @@
       return;
     }
     const n = NODES[cur];
-    const label = n.depth === 1 ? 'Nivel 2 · Necesidad' : 'Nivel 3 · Producto o servicio';
+    const label = ['', 'Nivel 2 · Necesidad', 'Nivel 3 · Producto o servicio', 'Nivel 4 · Funcionalidad'][n.depth];
     dBody.innerHTML = `<p class="drawer__level">${label}</p><a class="drawer__all" href="${href(n.path)}">${n.depth === 1 ? 'Ir a' : 'Ver'} ${n.title} ›</a>` +
-      n.children.map(c => (c.children && n.depth === 1)
+      n.children.map(c => c.children
         ? `<button class="drawer__item" data-go="${c.path}">${c.title}<span>›</span></button>`
         : `<a class="drawer__item" href="${href(c.path)}">${c.title}</a>`).join('');
   };
