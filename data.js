@@ -246,9 +246,9 @@ const TREE = [
     ]
   },
 
-  // ---------------------------------------------------------------- SOMOS RAPPIPAY (barra superior y footer)
+  // ---------------------------------------------------------------- 5. SOMOS RAPPIPAY
   {
-    path: '/acerca-de-rappipay/', title: 'Somos RappiPay', type: 'audience', nav: false, cta: CTA.cuenta,
+    path: '/acerca-de-rappipay/', title: 'Somos RappiPay', type: 'audience', cta: CTA.cuenta,
     prop: 'Quiénes somos y cómo respondemos',
     desc: 'Información institucional, financiera y regulatoria de RappiPay.',
     children: [

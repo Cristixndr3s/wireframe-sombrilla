@@ -34,9 +34,9 @@ code { font-size: 12px; }
 .btn.btn--ghost:hover { background: var(--white); }
 .lost svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; }
 .logo { font-size: 24px; font-weight: 600; text-decoration: none; margin-right: auto; white-space: nowrap; }
-.nav__list { display: flex; gap: 8px; list-style: none; margin: 0; padding: 0; }
+.nav__list { display: flex; gap: 4px; list-style: none; margin: 0; padding: 0; }
 .nav__item {
-  background: none; border: 1px solid transparent; border-radius: 999px; padding: 8px 16px;
+  background: none; border: 1px solid transparent; border-radius: 999px; padding: 8px 14px;
   font: inherit; font-size: 15px; color: var(--muted); cursor: pointer; white-space: nowrap;
 }
 .nav__item:hover, .nav__item[aria-expanded="true"] { border-color: var(--ink); color: var(--ink); }
@@ -192,6 +192,13 @@ main { min-height: 60vh; }
 .below { margin: 0 auto 48px; width: min(1264px, calc(100% - 96px));border: 1px dashed var(--line); border-radius: var(--radius); padding: 40px; text-align: center; color: var(--muted); font-size: 14px; }
 
 /* ---------- Móvil ---------- */
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .bar { gap: 12px; }
+  .logo { font-size: 20px; }
+  .nav__item { font-size: 14px; padding: 8px 10px; }
+  .btn.btn--ghost { padding: 9px 12px; font-size: 13px; }
+  .header__cta { padding: 11px 18px; font-size: 15px; }
+}
 @media (max-width: 1199px) {
   .nav, .header__cta, .utility, .lost__text { display: none; }
   .lost { padding: 8px 10px; }

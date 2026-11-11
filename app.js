@@ -272,7 +272,7 @@
             ? `<button class="mega__need${c === first ? ' is-active' : ''}" data-need="${c.path}">${c.title}<span>›</span></button>`
             : `<a class="mega__need" href="${href(c.path)}">${c.title}</a>`).join('')}
         </div>
-        <div class="mega__right" id="mega-right">${first ? megaRight(first) : `<p class="mega__empty">${aud.desc}</p>`}</div>
+        <div class="mega__right" id="mega-right">${first ? megaRight(first) : `<div class="mega__head"><span>${aud.title}</span></div><div class="mega__items">${kids(aud).map(c => `<a class="mega__item mega__link" href="${href(c.path)}"><strong>${c.title}</strong><span>${c.prop}</span></a>`).join('')}</div>`}</div>
         <p class="mega__note">Nivel 1: ${aud.title} · Nivel 2: producto o grupo de uso · Nivel 3 y 4: productos y funcionalidades</p>
       </div>`;
     mega.hidden = false;
@@ -311,8 +311,7 @@
     dBack.hidden = stack.length === 0;
     if (!cur) {
       dBody.innerHTML = `<p class="drawer__level">Nivel 1 · Audiencia</p>` +
-        NAV.map(a => `<button class="drawer__item" data-go="${a.path}">${a.title}<span>›</span></button>`).join('') +
-        `<a class="drawer__item drawer__item--quiet" href="#acerca-de-rappipay">Somos RappiPay</a>`;
+        NAV.map(a => `<button class="drawer__item" data-go="${a.path}">${a.title}<span>›</span></button>`).join('');
       return;
     }
     const n = NODES[cur];
