@@ -3,6 +3,7 @@
   const NODES = {};
   const walk = (list, parent, depth, audience) => {
     list.forEach(n => {
+      if (n.ref) return; // reutiliza una página ya registrada
       n.parent = parent;
       n.depth = depth;
       n.audience = audience || n;
@@ -11,6 +12,8 @@
     });
   };
   walk(TREE, null, 1, null);
+  const R = c => (c.ref ? NODES[c.ref] : c);
+  const kids = n => (n.children || []).map(R);
 
   const LEVEL_TYPE = {
     home: 'Home sombrilla · Para ti',
@@ -54,6 +57,7 @@
     <div class="note">
       <strong>Hero · Nivel ${n.depth} · ${LEVEL_TYPE[n.type]}</strong>
       <span>URL: <code>www.rappipay.co${n.path}</code>${n.nueva ? ' <em>(URL propuesta)</em>' : ''}</span>
+      ${n.nuevo ? '<span class="tag">No existe hoy</span>' : ''}${n.rc ? '<span class="tag">Viene de rappicard.co</span>' : ''}
     </div>`;
 
   const crumbs = n => {
@@ -82,7 +86,7 @@
 
   const img = (size = '') => `<div class="img ${size}" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="9" cy="9" r="2"/><path d="M3 17l5-4 3 2 5-5 5 4"/></svg></div>`;
 
-  const cards = list => list.map(c => `
+  const cards = list => list.map(R).map(c => `
     <a class="card" href="${href(c.path)}">
       <span class="card__type">${LEVEL_TYPE[c.type]}</span>
       <span class="card__title">${c.title}</span>
@@ -91,6 +95,16 @@
     </a>`).join('');
 
   const below = () => `<section class="below"><p>Debajo del hero va el contenido de la página (fuera del alcance de este wireframe).</p></section>`;
+
+  const footer = () => `
+    <footer class="footer">
+      <div class="footer__grid">${FOOTER.map(col => `
+        <div><p class="footer__title">${col.title}</p>${col.links.map(([t, p]) => p
+          ? `<a href="${href(p)}">${t}</a>`
+          : `<span title="Documento legal: no incluido en el wireframe">${t}</span>`).join('')}</div>`).join('')}
+      </div>
+      <p class="footer__seals">Vigilado SFC · Fogafín (según el producto) · Apps y redes sociales</p>
+    </footer>`;
 
   // ---------- Heroes por tipo ----------
   const HERO = {
@@ -107,7 +121,7 @@
           ${img('img--tall')}
         </div>
         <div class="needs" id="needs">
-          <h2 class="h2">¿Qué quieres hacer con tu plata?</h2>
+          <h2 class="h2">Todo lo que puedes hacer con RappiPay</h2>
           <div class="needs__grid">${n.children.map(c => `
             <a class="need" href="${href(c.path)}"><span class="need__title">${c.title}</span><span class="need__text">${c.prop}</span></a>`).join('')}
           </div>
@@ -121,8 +135,8 @@
         <p class="kicker">RappiPay</p>
         <h1 class="h1 h1--xl">${n.title}</h1>
         <p class="lead lead--center">${n.prop}. ${n.desc}</p>
-        <div class="chips">${n.children.map(c => `<a class="chip" href="${href(c.path)}">${c.title}</a>`).join('')}</div>
-        ${n.cta === CTA.empresa ? `<div class="actions actions--center">${ctaBtn(n)}</div>` : ''}
+        <div class="chips">${kids(n).map(c => `<a class="chip" href="${href(c.path)}">${c.title}</a>`).join('')}</div>
+        ${['/negocio/', '/empresas/'].includes(n.path) ? `<div class="actions actions--center">${ctaBtn(n)}</div>` : ''}
       </section>`,
 
     need: n => `
@@ -219,13 +233,16 @@
   const mega = document.getElementById('mega');
   let openAud = null;
 
-  navList.innerHTML = TREE.map(a => `<li><button class="nav__item" data-aud="${a.path}" aria-expanded="false">${a.title}</button></li>`).join('');
+  const NAV = TREE.filter(a => a.nav !== false);
+  navList.innerHTML = NAV.map(a => `<li><button class="nav__item" data-aud="${a.path}" aria-expanded="false">${a.title}</button></li>`).join('');
 
   // Panel derecho: cada producto con TODAS sus funcionalidades; lo demás, como tarjetas.
+  // Si el nivel 2 es un producto (RappiCuenta, RappiPréstamo…), el panel muestra ese producto completo.
   const megaRight = need => {
     if (!need || !need.children) return '';
-    const groups = need.children.filter(c => c.children);
-    const singles = need.children.filter(c => !c.children);
+    const items = need.type === 'product' ? [need] : kids(need);
+    const groups = items.filter(c => c.children);
+    const singles = items.filter(c => !c.children);
     return `
       <div class="mega__head"><span>${need.title}</span><a href="${href(need.path)}">Ver todo ›</a></div>
       ${groups.map(g => `
@@ -234,7 +251,7 @@
             <strong>${g.title}</strong><span>${g.prop}</span>
             ${g.entidad ? `<em>${ENTIDAD[g.entidad]}</em>` : ''}
           </a>
-          <div class="mega__feats">${g.children.map(s => `
+          <div class="mega__feats">${kids(g).map(s => `
             <a class="mega__feat" href="${href(s.path)}"><strong>${s.title}</strong><span>${s.prop}</span></a>`).join('')}
           </div>
         </div>`).join('')}
@@ -246,17 +263,17 @@
   const openMega = audPath => {
     const aud = NODES[audPath];
     openAud = audPath;
-    const first = aud.children.find(c => c.children) || null;
+    const first = kids(aud).find(c => c.children) || null;
     mega.innerHTML = `
       <div class="mega__inner">
         <div class="mega__left">
           <a class="mega__all" href="${href(aud.path)}">Ir a ${aud.title} ›</a>
-          ${aud.children.map(c => c.children
+          ${kids(aud).map(c => c.children
             ? `<button class="mega__need${c === first ? ' is-active' : ''}" data-need="${c.path}">${c.title}<span>›</span></button>`
             : `<a class="mega__need" href="${href(c.path)}">${c.title}</a>`).join('')}
         </div>
-        <div class="mega__right" id="mega-right">${megaRight(first)}</div>
-        <p class="mega__note">Nivel 1: ${aud.title} · Nivel 2: necesidad · Nivel 3: producto o servicio · Nivel 4: funcionalidad</p>
+        <div class="mega__right" id="mega-right">${first ? megaRight(first) : `<p class="mega__empty">${aud.desc}</p>`}</div>
+        <p class="mega__note">Nivel 1: ${aud.title} · Nivel 2: producto o grupo de uso · Nivel 3 y 4: productos y funcionalidades</p>
       </div>`;
     mega.hidden = false;
     navList.querySelectorAll('.nav__item').forEach(b => b.setAttribute('aria-expanded', String(b.dataset.aud === audPath)));
@@ -294,13 +311,14 @@
     dBack.hidden = stack.length === 0;
     if (!cur) {
       dBody.innerHTML = `<p class="drawer__level">Nivel 1 · Audiencia</p>` +
-        TREE.map(a => `<button class="drawer__item" data-go="${a.path}">${a.title}<span>›</span></button>`).join('');
+        NAV.map(a => `<button class="drawer__item" data-go="${a.path}">${a.title}<span>›</span></button>`).join('') +
+        `<a class="drawer__item drawer__item--quiet" href="#acerca-de-rappipay">Somos RappiPay</a>`;
       return;
     }
     const n = NODES[cur];
-    const label = ['', 'Nivel 2 · Necesidad', 'Nivel 3 · Producto o servicio', 'Nivel 4 · Funcionalidad'][n.depth];
+    const label = `Nivel ${n.depth + 1}`;
     dBody.innerHTML = `<p class="drawer__level">${label}</p><a class="drawer__all" href="${href(n.path)}">${n.depth === 1 ? 'Ir a' : 'Ver'} ${n.title} ›</a>` +
-      n.children.map(c => c.children
+      kids(n).map(c => c.children
         ? `<button class="drawer__item" data-go="${c.path}">${c.title}<span>›</span></button>`
         : `<a class="drawer__item" href="${href(c.path)}">${c.title}</a>`).join('');
   };
@@ -325,7 +343,7 @@
       app.innerHTML = `<section class="hero hero--page"><h1 class="h1">Página no incluida en el wireframe</h1><p class="lead"><a href="#inicio">Volver al inicio</a></p></section>`;
       return;
     }
-    app.innerHTML = HERO[n.type](n) + below();
+    app.innerHTML = HERO[n.type](n) + below() + footer();
     headerCta.textContent = ctaOf(n);
     navList.querySelectorAll('.nav__item').forEach(b => b.classList.toggle('is-current', b.dataset.aud === n.audience.path));
     document.title = `${n.title} · Wireframe sombrilla RappiPay`;

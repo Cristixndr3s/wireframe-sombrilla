@@ -4,7 +4,7 @@ Wireframe navegable para mostrar al equipo cómo se organiza la información del
 
 ## Qué muestra
 
-- **Menú principal en tres niveles:** audiencia (Para ti, Para tu negocio, Aprende, Nosotros) › necesidad (ahorra, busca tu tarjeta, pide un préstamo…) › producto o servicio. En desktop es un menú desplegable; en móvil, un menú por niveles.
+- **Menú principal en tres niveles:** audiencia (Para ti, Para tu negocio, Para tu empresa, Tu mejor decisión) › producto o grupo de uso (RappiCuenta, Maneja tu dinero, Ayuda y seguridad…) › productos y funcionalidades. "Somos RappiPay" va en la barra superior y el footer, y "Pérdida o robo" es un botón secundario siempre visible. En desktop es un menú desplegable; en móvil, un menú por niveles.
 - **Un hero distinto por nivel:** home de la sombrilla, audiencia, necesidad, producto, funcionalidad, servicio y categoría del blog. Cada hero lleva una anotación con su nivel y su URL (se oculta con "Mostrar anotaciones").
 - **Reglas del documento de especificaciones:** CTA según el producto, entidad responsable visible, breadcrumbs según la URL, páginas de servicio con selector por entidad y cifras como datos del CMS (`{{variable}}`).
 

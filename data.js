@@ -1,8 +1,11 @@
 /*
-  Árbol de navegación de la marca sombrilla (Documento de especificaciones, Puntos 1 a 3).
-  - El menú organiza (audiencia > necesidad > producto); la URL identifica (Punto 2.2).
-  - nueva: true = URL propuesta en este wireframe, no definida todavía en el documento.
-  - Los valores entre {{ }} son datos administrables del CMS (Punto 4.7): nunca se escriben a mano.
+  Árbol de navegación de la marca sombrilla, versión aprobada (noviembre 2026).
+  Base: menú RappiPay 2025 + complementos del documento de especificaciones.
+  - nueva: true  = URL propuesta, no existe hoy.
+  - nuevo: true  = producto o página que no existe hoy en ningún sitio.
+  - rc: true     = viene de rappicard.co.
+  - ref: '/ruta/' = el ítem reutiliza una página que ya existe en otra parte del árbol.
+  - {{variable}} = dato administrable del CMS (Punto 4.7): nunca se escribe a mano.
 */
 const ENTIDAD = {
   cf: 'RappiPay Compañía de Financiamiento S.A.',
@@ -19,55 +22,50 @@ const CTA = {
 };
 
 const TREE = [
+  // ---------------------------------------------------------------- 1. PARA TI
   {
     path: '/', title: 'Para ti', type: 'home', cta: CTA.cuenta,
     prop: 'Tu plata se mueve a la velocidad de Rappi',
     desc: 'Cuenta, tarjeta, préstamos y seguros 100% digitales, que se resuelven en minutos desde la app y te devuelven valor dentro de Rappi.',
     children: [
       {
-        path: '/ahorra/', nueva: true, title: 'Ahorra y mueve tu plata', type: 'need',
+        path: '/rappicuenta/', title: 'RappiCuenta', type: 'product', entidad: 'cf', cta: CTA.cuenta,
+        kicker: 'Cuenta de ahorros y depósito de bajo monto',
         prop: 'Tu plata rinde y se mueve al instante',
-        desc: 'Ahorra en Bolsillos y Bóvedas, paga con QR o PSE y envía plata sin costo desde tu RappiCuenta.',
+        desc: 'Guarda y organiza tu plata en una cuenta pensada para tu día a día, sin cuota de manejo.',
+        proofs: ['{{cuota_manejo}} cuota de manejo', '{{tasa_bolsillos}} E.A. en Bolsillos', 'Hasta {{tasa_bovedas_max}} E.A.* en Bóvedas'],
         children: [
-          {
-            path: '/rappicuenta/', title: 'RappiCuenta', type: 'product', entidad: 'cf', cta: CTA.cuenta,
-            kicker: 'Cuenta de ahorros y depósito de bajo monto',
-            prop: 'Tu plata rinde y se mueve al instante',
-            desc: 'Abre tu cuenta desde la app, separa tu plata en Bolsillos y hazla crecer en Bóvedas.',
-            proofs: ['{{cuota_manejo}} cuota de manejo', '{{tasa_bolsillos}} E.A. en Bolsillos', 'Hasta {{tasa_bovedas_max}} E.A.* en Bóvedas'],
-            children: [
-              { path: '/rappicuenta/bolsillos/', nueva: true, title: 'Bolsillos', type: 'feature', prop: 'Separa tu plata por metas y que rinda cada día' },
-              { path: '/rappicuenta/bovedas/', title: 'Bóvedas', type: 'feature', prop: 'Deja tu plata quieta y gana más por el plazo que elijas' },
-              { path: '/rappicuenta/bre-b/', title: 'Bre-B', type: 'feature', prop: 'Tu dinero se mueve al instante con tu llave' },
-              { path: '/rappicuenta/enviar-dinero/', title: 'Enviar dinero', type: 'feature', prop: 'Envía plata a cualquier cuenta en segundos' },
-              { path: '/rappicuenta/pagos-qr/', title: 'Pagos con QR', type: 'feature', prop: 'Paga en comercios escaneando un código' },
-              { path: '/rappicuenta/compras-pse/', title: 'Compra en PSE', type: 'feature', prop: 'Paga tus compras en línea desde tu cuenta' },
-              { path: '/rappicuenta/recargar-cuenta/', title: 'Recargar cuenta', type: 'feature', prop: 'Pon plata en tu cuenta como prefieras' },
-              { path: '/rappicuenta/retira-efectivo/', title: 'Retiro en cajeros', type: 'feature', prop: 'Saca efectivo cuando lo necesites' },
-              { path: '/rappicuenta/consignaciones-efectivo/', title: 'Consignaciones', type: 'feature', prop: 'Consigna efectivo en puntos aliados' }
-            ]
-          }
+          { path: '/rappicuenta/cuenta-de-ahorros/', title: 'Cuenta de ahorros', type: 'feature', prop: 'Tipos de cuenta y cómo abrir la tuya' },
+          { path: '/rappicuenta/bolsillos/', nueva: true, title: 'Bolsillos', type: 'feature', prop: 'Separa tu plata por metas y que rinda cada día' },
+          { path: '/rappicuenta/bovedas/', title: 'Bóvedas', type: 'feature', prop: 'Deja tu plata quieta y gana más por el plazo que elijas' },
+          { path: '/rappicuenta/alta-rentabilidad-cuentas/', title: 'Rentabilidad', type: 'feature', prop: 'Cuánto rinde tu plata en cada opción' },
+          { path: '/rappicuenta/ahorro-automatico/', nueva: true, title: 'Ahorro automático', type: 'feature', prop: 'Ahorra sin pensarlo, con reglas que tú defines' },
+          { path: '/alianzas/', title: 'Beneficios y alianzas', type: 'feature', prop: 'Descuentos con marcas aliadas pagando con RappiCuenta' },
+          { path: '/rappicuenta/blog/', nueva: true, title: 'Todo sobre RappiCuenta', type: 'category', prop: 'Guías, primeros pasos y novedades de tu cuenta' }
         ]
       },
       {
-        path: '/tarjetas/', nueva: true, title: 'Busca tu tarjeta', type: 'need',
+        path: '/tarjetas/', nueva: true, title: 'Tarjetas de crédito', type: 'need',
         prop: 'La tarjeta que va contigo, tengas historial o no',
-        desc: 'Elige la RappiCard que te sirve hoy: la clásica con cashback o la Garantizada para empezar tu historial.',
+        desc: 'El crédito como herramienta para pagar, comprar y organizar tus gastos, no como una obligación.',
         children: [
           {
-            path: '/rappicard/', title: 'RappiCard', type: 'product', entidad: 'dav', cta: CTA.card,
+            path: '/rappicard/', rc: true, title: 'RappiCard', type: 'product', entidad: 'dav', cta: CTA.card,
             kicker: 'Tarjeta de crédito',
             prop: 'La tarjeta que te devuelve en cada compra',
             desc: 'Pide tu RappiCard desde la app, úsala dentro y fuera de Rappi y recibe cashback en cada compra.',
             proofs: ['Hasta {{cashback_rappi}} cashback* en Rappi', 'Hasta {{cashback_fuera}} cashback* fuera de Rappi', '{{cuota_manejo_card}} cuota de manejo'],
             children: [
-              { path: '/rappicard/compartida/', title: 'RappiCard Compartida', type: 'feature', prop: 'Comparte tu cupo con quien quieras' },
-              { path: '/rappicard/meses-sin-intereses/', title: 'Meses sin intereses', type: 'feature', prop: 'Difiere tus compras sin pagar intereses' },
-              { path: '/rappicard/simulador/', title: 'Simulador', type: 'feature', prop: 'Calcula tus cuotas antes de comprar' }
+              { path: '/rappicard/compartida/', nuevo: true, title: 'RappiCard Compartida', type: 'feature', prop: 'Comparte tu cupo con quien quieras' },
+              { path: '/rappicard/meses-sin-intereses/', rc: true, title: 'Meses sin intereses', type: 'feature', prop: 'Difiere tus compras sin pagar intereses' },
+              { path: '/rappicard/simulador/', rc: true, title: 'Simulador', type: 'feature', prop: 'Calcula tus cuotas antes de comprar' },
+              { path: '/rappicard/apple-pay/', rc: true, title: 'Apple Pay', type: 'feature', prop: 'Paga con tu celular de forma segura' },
+              { path: '/rappicard/beneficios/', rc: true, title: 'Beneficios RappiCard', type: 'feature', prop: 'Aliados y Viajes RappiCard' },
+              { path: '/rappicard/blog/', nueva: true, rc: true, title: 'Todo sobre RappiCard', type: 'category', prop: 'Ciclo de facturación, guías y novedades' }
             ]
           },
           {
-            path: '/rappicard/garantizada/', title: 'RappiCard Garantizada', type: 'product', entidad: 'tbd', cta: CTA.card,
+            path: '/rappicard/garantizada/', nuevo: true, title: 'RappiCard Garantizada', type: 'product', entidad: 'tbd', cta: CTA.card,
             kicker: 'Tarjeta de crédito con depósito en garantía',
             prop: 'Construye tu historial y gradúate a RappiCard',
             desc: 'Tu cupo es igual a tu depósito. Paga a tiempo, cumple tus misiones y pasa a la RappiCard clásica.',
@@ -76,163 +74,196 @@ const TREE = [
         ]
       },
       {
-        path: '/prestamos/', nueva: true, title: 'Pide un préstamo', type: 'need',
+        path: '/rappiprestamo/', title: 'RappiPréstamo', type: 'product', entidad: 'cf', cta: CTA.tbd,
+        kicker: 'Crédito de libre inversión',
         prop: 'Plata para lo que quieras, en minutos',
-        desc: 'Un crédito de libre inversión 100% digital, sin papeleo ni codeudores, que llega a tu cuenta en minutos.',
+        desc: 'Entiende cuándo un préstamo es una buena opción, revisa los requisitos y simúlalo antes de decidir.',
+        proofs: ['De {{plazo_min}} a {{plazo_max}} meses', 'Sin papeleo ni codeudores', 'Desembolso en minutos'],
         children: [
-          {
-            path: '/rappiprestamo/', title: 'RappiPréstamo', type: 'product', entidad: 'cf', cta: CTA.tbd,
-            kicker: 'Crédito de libre inversión',
-            prop: 'Plata para lo que quieras, en minutos',
-            desc: 'Pídelo desde la app y recíbelo en tu RappiCuenta o en cualquier cuenta registrada.',
-            proofs: ['De {{plazo_min}} a {{plazo_max}} meses', 'Sin papeleo ni codeudores', 'Desembolso en minutos']
-          }
+          { path: '/rappiprestamo/libre-inversion/', nueva: true, title: 'Crédito de libre inversión', type: 'feature', prop: 'Para viajes, tecnología o lo que necesites' },
+          { path: '/rappiprestamo/requisitos/', nueva: true, title: 'Requisitos', type: 'feature', prop: 'Qué necesitas para pedirlo' },
+          { path: '/rappiprestamo/vtu/', title: '¿Qué es el VTU?', type: 'feature', prop: 'El Valor Total Unificado: todos los costos en una sola cifra' },
+          { path: '/rappiprestamo/simulador/', nueva: true, title: 'Simula tu préstamo', type: 'feature', prop: 'Calcula tu cuota y tu VTU antes de pedirlo' },
+          { path: '/rappiprestamo/blog/', nueva: true, title: 'Todo sobre RappiPréstamo', type: 'category', prop: 'Guías y novedades de tu préstamo' }
         ]
       },
       {
-        path: '/seguros/', nueva: true, title: 'Protégete', type: 'need',
+        path: '/rappiseguros/', nuevo: true, title: 'RappiSeguros', type: 'product', entidad: 'seg', cta: CTA.tbd,
+        kicker: 'Seguros',
         prop: 'Protección para el día a día, en pocos pasos',
-        desc: 'Seguros pensados para los riesgos de todos los días, que contratas y gestionas desde la app.',
+        desc: 'Contrata desde la app, gestiona todo en línea y recibe Créditos de Rappi por mantener tu seguro.',
+        proofs: ['Contratación desde la app', 'Gestión y soporte 24/7', 'Créditos de Rappi por permanencia'],
         children: [
-          {
-            path: '/rappiseguros/', title: 'RappiSeguros', type: 'product', entidad: 'seg', cta: CTA.tbd,
-            kicker: 'Seguros',
-            prop: 'Protección para el día a día, en pocos pasos',
-            desc: 'Contrata desde la app, gestiona todo en línea y recibe Créditos de Rappi por mantener tu seguro.',
-            proofs: ['Contratación desde la app', 'Gestión y soporte 24/7', 'Créditos de Rappi por permanencia'],
-            children: [
-              { path: '/rappiseguros/tarjeta-protegida-plus/', nueva: true, title: 'Tarjeta Protegida Plus', type: 'feature', prop: 'Protege tus tarjetas contra fraude y uso indebido' },
-              { path: '/rappiseguros/desempleo/', nueva: true, title: 'Seguro por Desempleo', type: 'feature', prop: 'Respaldo si pierdes tu ingreso, seas empleado o independiente' },
-              { path: '/rappiseguros/vida/', nueva: true, title: 'Seguro de Vida', type: 'feature', prop: 'Protección para ti y los tuyos' }
-            ]
-          }
+          { path: '/rappiseguros/tarjeta-protegida-plus/', nuevo: true, title: 'Tarjeta Protegida Plus', type: 'feature', prop: 'Protege tus tarjetas contra fraude y uso indebido' },
+          { path: '/rappiseguros/desempleo/', nuevo: true, title: 'Seguro por Desempleo', type: 'feature', prop: 'Respaldo si pierdes tu ingreso, seas empleado o independiente' },
+          { path: '/rappiseguros/vida/', nuevo: true, title: 'Seguro de Vida', type: 'feature', prop: 'Protección para ti y los tuyos' },
+          { path: '/rappiseguros/blog/', nuevo: true, title: 'Todo sobre RappiSeguros', type: 'category', prop: 'Guías y novedades de tus seguros' }
         ]
       },
       {
-        path: '/beneficios/', nueva: true, title: 'Gana beneficios', type: 'need',
-        prop: 'Cada producto te devuelve valor en Rappi',
-        desc: 'Cashback, alianzas y viajes con beneficios para quienes usan los productos RappiPay.',
+        path: '/maneja-tu-dinero/', nueva: true, title: 'Maneja tu dinero', type: 'need',
+        prop: 'Todo lo que puedes hacer con tu plata, en un solo lugar',
+        desc: 'Recargar, pagar, transferir y retirar. No es un producto: son las acciones de todos los días con tu RappiCuenta.',
         children: [
-          { path: '/alianzas/', title: 'Alianzas', type: 'page', prop: 'Descuentos con marcas aliadas' },
-          { path: '/rappicard/viajes/', nueva: true, title: 'Viajes RappiCard', type: 'feature', prop: 'Vuelos y hoteles con beneficios', entidad: 'dav' },
-          { path: '/cashback/', nueva: true, title: 'Cashback', type: 'page', prop: 'Cómo ganas cashback con cada producto' }
+          { path: '/rappicuenta/recargar-cuenta/', title: 'Recargar tu cuenta', type: 'feature', prop: 'Pon plata en tu cuenta como prefieras', parentProduct: '/rappicuenta/' },
+          { path: '/rappicuenta/enviar-dinero/', title: 'Enviar dinero', type: 'feature', prop: 'Envía plata a cualquier cuenta en segundos', parentProduct: '/rappicuenta/' },
+          { path: '/rappicuenta/bre-b/', title: 'Bre-B', type: 'feature', prop: 'Tu dinero se mueve al instante con tu llave', parentProduct: '/rappicuenta/' },
+          { path: '/rappicuenta/pagos-qr/', title: 'Pagos con QR', type: 'feature', prop: 'Paga en comercios escaneando un código', parentProduct: '/rappicuenta/' },
+          { path: '/rappicuenta/compras-pse/', title: 'Compra con PSE', type: 'feature', prop: 'Paga tus compras en línea desde tu cuenta', parentProduct: '/rappicuenta/' },
+          { path: '/rappicuenta/retira-efectivo/', title: 'Retira en cajeros', type: 'feature', prop: 'Saca efectivo cuando lo necesites', parentProduct: '/rappicuenta/' },
+          { path: '/rappicuenta/consignaciones-efectivo/', title: 'Consignaciones en efectivo', type: 'feature', prop: 'Consigna efectivo en puntos aliados', parentProduct: '/rappicuenta/' },
+          { path: '/demarcacion-4x1000/', title: 'Demarcación 4x1000', type: 'feature', prop: 'Marca tu cuenta exenta del 4x1000', parentProduct: '/rappicuenta/' }
         ]
       },
       {
-        path: '/ayuda/', nueva: true, title: 'Obtén ayuda', type: 'need',
-        prop: 'Resuelve lo que necesites, rápido',
-        desc: 'Reporta una tarjeta, consulta tasas o contáctanos. Cada página separa la información por entidad.',
+        path: '/ayuda/', nueva: true, title: 'Ayuda y seguridad', type: 'need',
+        prop: 'Protección y soporte cuando más lo necesitas',
+        desc: 'Bloquea tu tarjeta, resuelve problemas y conoce cómo cuidamos tu dinero y tu información.',
         children: [
           { path: '/perdida-o-robo/', title: 'Pérdida o robo', type: 'service', prop: 'Bloquea tu tarjeta en un paso', selector: ['RappiCard', 'Tarjeta de RappiCuenta', 'Empresas'] },
-          { path: '/canales-de-contacto/', title: 'Canales de contacto', type: 'service', prop: 'Habla con nosotros por el canal que prefieras', selector: ['RappiCuenta', 'RappiCard', 'RappiPréstamo', 'RappiSeguros'] },
           { path: '/centro-de-ayuda/', title: 'Centro de ayuda', type: 'service', prop: 'Respuestas a las preguntas más frecuentes', selector: ['RappiCuenta', 'RappiCard', 'RappiPréstamo', 'RappiSeguros'] },
+          { path: '/canales-de-contacto/', title: 'Canales de contacto', type: 'service', prop: 'Habla con nosotros por el canal que prefieras', selector: ['RappiCuenta', 'RappiCard', 'RappiPréstamo', 'RappiSeguros'] },
+          { path: '/personal-banker/', nueva: true, rc: true, title: 'Contactar a mi Personal Banker', type: 'page', prop: 'Tu asesor personal, cuando lo necesites' },
+          { path: '/seguridad/', nueva: true, title: 'Seguridad de tu dinero', type: 'page', prop: 'Cómo cuidamos tu plata y tu información' },
+          { path: '/seguridad/tips/', nueva: true, title: 'Tips de seguridad', type: 'page', prop: 'Fraude, contraseñas, retiros y canales seguros' },
           { path: '/tasas-y-tarifas/', title: 'Tasas y tarifas', type: 'service', prop: 'Las tasas vigentes de cada producto', selector: ['RappiCuenta', 'RappiCard', 'RappiPréstamo', 'Empresas'] },
-          { path: '/pqrs/', title: 'PQRS', type: 'service', prop: 'Peticiones, quejas, reclamos y sugerencias', selector: ['RappiPay CF', 'Banco Davivienda', 'RappiSeguros'] }
+          { path: '/pqrs/', title: 'Soporte y PQRs', type: 'service', prop: 'Peticiones, quejas, reclamos y sugerencias', selector: ['RappiPay CF', 'Banco Davivienda', 'RappiSeguros'] }
         ]
       }
     ]
   },
+
+  // ---------------------------------------------------------------- 2. PARA TU NEGOCIO
   {
-    path: '/empresas/', title: 'Para tu negocio', type: 'audience', cta: CTA.empresa,
-    prop: 'Tu negocio, más fácil de manejar',
-    desc: 'Paga, cobra, administra y financia tu negocio desde una sola cuenta.',
+    path: '/negocio/', nueva: true, title: 'Para tu negocio', type: 'audience', cta: CTA.cuenta,
+    prop: 'Separa y organiza las finanzas de tu negocio',
+    desc: 'Para personas naturales con negocio, vendas o no a través de Rappi.',
     children: [
       {
-        path: '/empresas/abre-tu-cuenta/', nueva: true, title: 'Abre tu cuenta', type: 'need',
-        prop: 'Una cuenta pensada para tu negocio',
-        desc: 'Abre tu cuenta empresarial en línea y haz crecer tu plata en Bóvedas Empresas.',
+        path: '/negocio/cuenta/', nueva: true, title: 'Cuenta para tu negocio', type: 'need',
+        prop: 'Una cuenta para ordenar las finanzas de tu negocio',
+        desc: 'Cómo funciona la cuenta para negocios pequeños y emprendimientos: beneficios, requisitos y uso.',
+        children: [
+          {
+            path: '/negocio/cuenta-de-ahorros/', nueva: true, title: 'Cuenta de ahorros para negocios', type: 'product', entidad: 'cf', cta: CTA.tbd,
+            kicker: 'Cuenta de ahorros para personas con negocio',
+            prop: 'Separa la plata de tu negocio de la tuya',
+            desc: 'Recibe, paga y ahorra lo de tu negocio en una cuenta aparte, desde la app.',
+            proofs: ['{{beneficio_negocio_1}}', '{{beneficio_negocio_2}}', '{{beneficio_negocio_3}}']
+          },
+          { path: '/negocio/beneficios/', nueva: true, title: 'Beneficios de la cuenta', type: 'page', prop: 'Lo que ganas con una cuenta para tu negocio' },
+          { path: '/negocio/rappiprestamo/', nueva: true, title: 'RappiPréstamo para tu negocio', type: 'page', prop: 'Usa tu crédito de libre inversión para crecer', entidad: 'cf' }
+        ]
+      },
+      {
+        path: '/negocio/aliados/', nueva: true, title: 'Aliados Rappi', type: 'need',
+        prop: 'Beneficios exclusivos para negocios que venden en Rappi',
+        desc: 'Productos financieros diseñados para aliados, como RappiPréstamo Aliados.',
+        children: [
+          { path: '/negocio/aliados/que-es/', nueva: true, title: '¿Qué es ser aliado Rappi?', type: 'page', prop: 'Cómo funciona y qué ganas' },
+          { path: '/negocio/aliados/beneficios/', nueva: true, title: 'Beneficios para aliados', type: 'page', prop: 'Lo que tienes por vender en Rappi' },
+          {
+            path: '/negocio/rappiprestamo-aliados/', nueva: true, title: 'RappiPréstamo Aliados', type: 'product', entidad: 'cf', cta: CTA.tbd,
+            kicker: 'Crédito de libre inversión para comercios',
+            prop: 'Capital para crecer tu negocio en Rappi',
+            desc: 'Te evaluamos con tus ventas en Rappi y el dinero llega en minutos a tu cuenta.',
+            proofs: ['Desde {{aliados_min}} hasta {{aliados_max}}', 'Hasta {{aliados_plazo}} meses', 'Evaluación con tus ventas en Rappi']
+          },
+          { path: '/negocio/aliados/condiciones/', nueva: true, title: 'Condiciones', type: 'page', prop: 'Términos del programa de aliados', entidad: 'cf' }
+        ]
+      },
+      {
+        path: '/negocio/ayuda/', nueva: true, title: 'Ayuda y seguridad', type: 'need',
+        prop: 'Soporte para tu negocio',
+        desc: 'Reporta una tarjeta, resuelve dudas o contáctanos.',
+        children: [ { ref: '/perdida-o-robo/' }, { ref: '/centro-de-ayuda/' }, { ref: '/canales-de-contacto/' }, { ref: '/pqrs/' } ]
+      }
+    ]
+  },
+
+  // ---------------------------------------------------------------- 3. PARA TU EMPRESA
+  {
+    path: '/empresas/', title: 'Para tu empresa', type: 'audience', cta: CTA.empresa,
+    prop: 'Control financiero para tu empresa',
+    desc: 'Para empresas constituidas: pagos, nómina y transferencias de forma estructurada y segura.',
+    children: [
+      {
+        path: '/empresas/cuenta/', nueva: true, title: 'Cuenta para empresas', type: 'need',
+        prop: 'La cuenta empresarial y su apertura',
+        desc: 'La cuenta para personas jurídicas, cómo abrirla y las funcionalidades para gestionar tu empresa.',
         children: [
           {
             path: '/empresas/rappicuenta-empresas/', nueva: true, title: 'RappiCuenta Empresas', type: 'product', entidad: 'cf', cta: CTA.empresa,
-            kicker: 'Cuenta de ahorros para negocios',
-            prop: 'Paga, cobra y controla tu negocio desde una cuenta',
+            kicker: 'Cuenta empresarial',
+            prop: 'Paga, cobra y controla tu empresa desde una cuenta',
             desc: 'Nómina, pagos a proveedores y cobros con link, con usuarios y permisos para tu equipo.',
             proofs: ['Pago de nómina y pagos múltiples', 'Link de cobro', 'Usuarios, permisos y control dual'],
             children: [
-              { path: '/empresas/bovedas/', title: 'Bóvedas Empresas', type: 'feature', prop: 'Haz rendir la plata de tu negocio' }
+              { path: '/empresas/beneficios/', nueva: true, title: 'Beneficios de la cuenta', type: 'feature', prop: 'Lo que tu empresa gana con la cuenta' },
+              { path: '/empresas/requisitos/', nueva: true, title: 'Requisitos', type: 'feature', prop: 'Documentos para abrir la cuenta' },
+              { path: '/empresas/apertura-rappicuenta-empresa/', title: 'Proceso de apertura', type: 'feature', prop: 'Paso a paso para abrir tu cuenta' },
+              { path: '/empresas/bovedas/', title: 'Bóvedas Empresas', type: 'feature', prop: 'Haz rendir la plata de tu empresa' }
             ]
           }
         ]
       },
       {
-        path: '/empresas/paga-y-cobra/', nueva: true, title: 'Paga y cobra', type: 'need',
-        prop: 'Paga y cobra sin salir de tu cuenta',
-        desc: 'Pagos individuales y masivos, nómina y cobros con link desde RappiCuenta Empresas.',
+        path: '/empresas/maneja/', nueva: true, title: 'Maneja tu empresa', type: 'need',
+        prop: 'Las herramientas para el día a día de tu empresa',
+        desc: 'Paga, transfiere y administra el dinero de la empresa desde RappiCuenta Empresas.',
         children: [
-          { path: '/empresas/pago-individual/', title: 'Pago individual', type: 'feature', prop: 'Paga a un proveedor en segundos', parentProduct: '/empresas/rappicuenta-empresas/' },
+          { path: '/empresas/pago-individual/', title: 'Pagos individuales', type: 'feature', prop: 'Paga a un proveedor en segundos', parentProduct: '/empresas/rappicuenta-empresas/' },
+          { path: '/empresas/pago-multiple/', title: 'Pagos múltiples', type: 'feature', prop: 'Paga a muchos destinatarios a la vez', parentProduct: '/empresas/rappicuenta-empresas/' },
           { path: '/empresas/pago-nomina/', title: 'Pago de nómina', type: 'feature', prop: 'Paga a todo tu equipo en un solo paso', parentProduct: '/empresas/rappicuenta-empresas/' },
-          { path: '/empresas/pago-multiple/', title: 'Pago múltiple', type: 'feature', prop: 'Paga a muchos destinatarios a la vez', parentProduct: '/empresas/rappicuenta-empresas/' },
-          { path: '/empresas/link-de-cobro/', title: 'Link de cobro', type: 'feature', prop: 'Cobra con un link que compartes por chat', parentProduct: '/empresas/rappicuenta-empresas/' }
-        ]
-      },
-      {
-        path: '/empresas/administra/', nueva: true, title: 'Administra tu cuenta', type: 'need',
-        prop: 'Tu equipo, con los permisos justos',
-        desc: 'Define quién hace qué en la cuenta de tu negocio y aprueba las operaciones importantes.',
-        children: [
+          { path: '/empresas/link-de-cobro/', title: 'Link de cobro', type: 'feature', prop: 'Cobra con un link que compartes por chat', parentProduct: '/empresas/rappicuenta-empresas/' },
           { path: '/empresas/usuarios-y-permisos/', title: 'Usuarios y permisos', type: 'feature', prop: 'Da acceso a tu equipo con roles', parentProduct: '/empresas/rappicuenta-empresas/' },
           { path: '/empresas/control-dual/', title: 'Control dual', type: 'feature', prop: 'Una persona prepara, otra aprueba', parentProduct: '/empresas/rappicuenta-empresas/' }
         ]
       },
       {
-        path: '/empresas/financia/', nueva: true, title: 'Financia tu negocio', type: 'need',
-        prop: 'Capital para crecer tu negocio en Rappi',
-        desc: 'Crédito de capital de trabajo para comercios que venden en Rappi, evaluado con tus ventas.',
+        path: '/empresas/ayuda/', nueva: true, title: 'Ayuda y seguridad', type: 'need',
+        prop: 'Soporte para tu empresa',
+        desc: 'Reporta una tarjeta, consulta el estado del servicio o contáctanos.',
         children: [
-          {
-            path: '/empresas/rappiprestamo-aliados/', title: 'RappiPréstamo Aliados', type: 'product', entidad: 'cf', cta: CTA.tbd,
-            kicker: 'Crédito de libre inversión para comercios',
-            prop: 'Capital para crecer tu negocio en Rappi',
-            desc: 'Te evaluamos con tus ventas en Rappi y el dinero llega en minutos a tu cuenta.',
-            proofs: ['Desde {{aliados_min}} hasta {{aliados_max}}', 'Hasta {{aliados_plazo}} meses', 'Evaluación con tus ventas en Rappi']
-          }
-        ]
-      },
-      {
-        path: '/empresas/ayuda/', nueva: true, title: 'Obtén ayuda', type: 'need',
-        prop: 'Soporte para tu negocio',
-        desc: 'Reporta una tarjeta, aprende a abrir tu cuenta o contáctanos.',
-        children: [
-          { path: '/empresas/perdida-o-robo/', title: 'Pérdida o robo Empresas', type: 'service', prop: 'Bloquea la tarjeta de tu negocio', selector: ['RappiCuenta Empresas'] },
-          { path: '/empresas/apertura-rappicuenta-empresa/', title: 'Guía de apertura', type: 'page', prop: 'Paso a paso para abrir tu cuenta' },
-          { path: '/empresas/canales-de-contacto/', nueva: true, title: 'Canales de contacto', type: 'service', prop: 'Habla con nosotros', selector: ['RappiCuenta Empresas', 'RappiPréstamo Aliados'] }
+          { path: '/empresas/perdida-o-robo/', title: 'Pérdida o robo Empresas', type: 'service', prop: 'Bloquea la tarjeta de tu empresa', selector: ['RappiCuenta Empresas'] },
+          { path: '/empresas/manual-life-hacker/', nueva: true, title: 'Manual Life-Hacker Empresas', type: 'page', prop: 'Guía para sacarle provecho a tu cuenta' },
+          { ref: '/pqrs/' },
+          { path: '/empresas/estado-del-servicio/', nuevo: true, title: 'Estado del servicio', type: 'page', prop: 'Incidentes y comunicaciones para empresas' }
         ]
       }
     ]
   },
+
+  // ---------------------------------------------------------------- 4. TU MEJOR DECISIÓN
   {
-    path: '/blog/', title: 'Aprende', type: 'audience', cta: CTA.cuenta,
-    prop: 'Aprende a manejar mejor tu plata',
-    desc: 'Educación financiera para todos y guías para sacarle provecho a cada producto.',
+    path: '/blog/', title: 'Tu mejor decisión', type: 'audience', cta: CTA.cuenta,
+    prop: 'Entiende tu dinero antes de decidir',
+    desc: 'Guías y contenidos claros sobre dinero, crédito y finanzas, sin venderte un producto.',
     children: [
-      {
-        path: '/blog/educacion-financiera/', title: 'Educación financiera', type: 'category',
-        prop: 'Finanzas personales, sin letra pequeña',
-        desc: 'Presupuesto, ahorro, impuestos e historial crediticio. Contenido educativo: no habla de productos.',
-        rule: 'Línea educativa: sin productos ni enlaces a productos (Punto 3.5)'
-      },
-      {
-        path: '/blog/productos/', nueva: true, title: 'Conoce nuestros productos', type: 'need',
-        prop: 'Guías para sacarle provecho a cada producto',
-        desc: 'Usos, novedades y paso a paso de cada producto, separados por producto y entidad.',
-        children: [
-          { path: '/blog/rappicuenta/', title: 'Posts de RappiCuenta', type: 'category', prop: 'Guías y novedades de RappiCuenta', entidad: 'cf' },
-          { path: '/blog/rappicard/', title: 'Posts de RappiCard', type: 'category', prop: 'Guías y novedades de RappiCard', entidad: 'dav' },
-          { path: '/blog/rappiprestamo/', title: 'Posts de RappiPréstamo', type: 'category', prop: 'Guías y novedades de RappiPréstamo', entidad: 'cf' },
-          { path: '/blog/rappiseguros/', title: 'Posts de RappiSeguros', type: 'category', prop: 'Guías y novedades de RappiSeguros', entidad: 'seg' },
-          { path: '/blog/empresas/', title: 'Posts de Empresas', type: 'category', prop: 'Guías para negocios', entidad: 'cf' }
-        ]
-      }
+      { path: '/blog/educacion-financiera/', title: 'Educación financiera', type: 'category', prop: 'Presupuesto, ahorro, historial crediticio, 4x1000 y renta', rule: 'Contenido educativo: sin productos ni enlaces a productos (Punto 3.5)' },
+      { path: '/guia-financiera/', title: 'Tu guía financiera', type: 'category', prop: 'Paso a paso para tus decisiones de dinero', rule: 'Contenido educativo: sin productos ni enlaces a productos (Punto 3.5)' },
+      { path: '/manual-life-hacker/', nueva: true, title: 'Manual Life-Hacker Personas', type: 'page', prop: 'Trucos para manejar mejor tu plata' }
     ]
   },
+
+  // ---------------------------------------------------------------- SOMOS RAPPIPAY (barra superior y footer)
   {
-    path: '/acerca-de-rappipay/', title: 'Nosotros', type: 'audience', cta: CTA.cuenta,
+    path: '/acerca-de-rappipay/', title: 'Somos RappiPay', type: 'audience', nav: false, cta: CTA.cuenta,
     prop: 'Quiénes somos y cómo respondemos',
     desc: 'Información institucional, financiera y regulatoria de RappiPay.',
     children: [
       { path: '/estados-financieros/', title: 'Estados financieros', type: 'page', prop: 'Información financiera publicada' },
       { path: '/codigo-de-etica/', nueva: true, title: 'Código de ética', type: 'page', prop: 'Nuestros principios de conducta' },
-      { path: '/notificaciones-judiciales/', nueva: true, title: 'Notificaciones judiciales', type: 'page', prop: 'Canal oficial para notificaciones' }
+      { path: '/notificaciones-judiciales/', nueva: true, title: 'Notificaciones judiciales', type: 'page', prop: 'Canal oficial para notificaciones' },
+      { path: '/defensoria/', nueva: true, title: 'Defensoría del consumidor financiero', type: 'service', prop: 'El defensor de cada entidad', selector: ['RappiPay CF', 'Banco Davivienda'] }
     ]
   }
+];
+
+// Footer agrupado por entidad (Punto 3.10). Los enlaces sin ruta propia apuntan a la página más cercana.
+const FOOTER = [
+  { title: 'Somos RappiPay', links: [['Acerca de RappiPay', '/acerca-de-rappipay/'], ['Estados financieros', '/estados-financieros/'], ['Código de ética', '/codigo-de-etica/'], ['Notificaciones judiciales', '/notificaciones-judiciales/']] },
+  { title: 'RappiPay CF', links: [['Reglamento cuenta de ahorros'], ['Reglamento depósito de bajo monto'], ['Tasas y tarifas', '/tasas-y-tarifas/'], ['Política de tratamiento de datos'], ['Manuales, políticas y aviso de privacidad'], ['Términos y condiciones'], ['Defensoría', '/defensoria/']] },
+  { title: 'Banco Davivienda · RappiCard', links: [['Contratos RappiCard'], ['Pagaré RappiCard'], ['Documentos'], ['Tasas y tarifas', '/tasas-y-tarifas/'], ['Condiciones de uso'], ['Términos y condiciones'], ['T&C de EMILIA'], ['Defensoría', '/defensoria/']] },
+  { title: 'RappiSeguros', links: [['Condiciones de las pólizas (por definir con Legal)']] }
 ];
